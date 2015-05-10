@@ -1,0 +1,137 @@
+MorphForm v1.0
+
+Shawn Conlin
+Wolvesbane Designs
+http://www.wolvesbanedesigns.com
+
+
+Introduction:
+MorphForm, this is your user…. 
+Your user is a web/PHP developer who is looking for an easy and efficient way
+to process forms on the site being developed.
+
+User, this is MorphForm……
+MorphForm is a PHP class designed to provide you with flexible, easy, and 
+efficient form processing.
+
+You make such a good couple……
+
+Class Usage:
+This class was designed to make adding basic forms to websites extremely easy. 
+In fact there are only 3 steps to it.
+
+1. Create your Form
+When creating your form there are several things you need to build into it. 
+The first are the hidden fields that will tell the script what to do with your 
+form data. These entries take the form of:
+
+<input type="hidden" name=Process Option  value=FileName>
+
+The processing options are MF_Email, MF_Outfile, and MF_Browser. These options 
+are not exclusive and can be used more than once in a single form by adding a 
+suffix, see the example below. This technique is most useful for sending 
+multiple emails based on form input and/or writing data to files.
+
+<input type="hidden" name="MF_Email_1" value="email1.txt">
+<input type="hidden" name="MF_Email_2" value="email2.txt">
+
+The next important aspect of your form is the naming of your fields. To take 
+full advantage of MorphForm's features you need to use prefixes on the field 
+names to tell it which fields need special attention. The prefixes must be 
+separated from the rest of the name by an underscore. 
+The recognized prefixes are:
+
+R - Marks the field as required
+E - Denotes the field requires an email address
+P - Marks fields that accepts phone numbers and formats the as (123) 456-7890
+N - Denotes the field only accepts numeric entries.
+
+The prefixes can be combined to mark a field for multiple validation, as in 
+RE_Email to cause the field to be required and to contain an email address.
+
+The final requirement for the form is that the submit button be titled "submit" 
+in all lowercase. This is due to the fact that PHP variables are case sensitive.
+
+2. Create your Form processing page
+Depending on your programming style, this may just be a continuation of the 
+page you began in the last section. If you are not sure what I am talking about,
+using PHP you can have a single page offer the input request and output. I have 
+done this in the examples included in this package (See index.php). 
+
+Below is the code you will need to have in your processing page to use this 
+class.
+
+<?php
+     /* Load the class definition file */
+     Require "morphform.cls";
+
+     /* Create a new instance of the class. This can use $_POST, $_GET, or any 
+		 other Associative Array */
+     $MF = new MorphForm($_POST);
+
+     /* Determine if errors were found */
+     if ($MF->CheckForErrors()) {
+        /* if errors were found, display them */
+        $MF->ProcessErrors();
+     } else {
+        /* if there were no errors process the data and generate output as 
+				specified */
+        $MF->OutputForm();
+     }
+?> 
+
+I suspect that very few people will use this code as it sits if for no other 
+reason than the fact that it won't make for a very pretty page. Most people are 
+going to want to work it into their existing layouts and will at a minimum add 
+some instructions and possibly re-display the form when errors are found. 
+
+When errors are detected and the ProcessErrors() function is called, the errors 
+will be displayed on the screen. The errors are listed with an error description
+followed by the fields that caused the errors, ie.,
+The following required fields need to be completed:
+First Name
+Last Name
+Email
+
+There is no automatic output from the class if no errors occur. All output from 
+the class is determined by the configuration settings. If you opt not to have 
+browser output from the data, it is recommended to have something displayed as 
+part of your processing page.
+
+3. Create your Configuration Files
+The configuration files are discussed in their own section.
+
+Configuration Files:
+From a usage standpoint, the configuration files are the most important part of 
+this package. These files tell the class how to format the data it was given and
+ what type of output is required. You can create/edit these files with any plain
+  text editor (Notepad comes to mind) you want and they do not require any 
+	special permissions on the server.
+
+When you are creating the configuration files, you specify where to insert the 
+form data by entering the field name in brackets. For example,  typing "Your 
+name is [r_Name]" would display "Your name is John" after being processed.
+
+Email Configuration:
+The email configuration files have the most complex formatting of all the files.
+This is because you need to place information on specific lines and/or leave 
+blank lines in the file. 
+
+The following is a line by line breakdown of the format:
+1.	From
+2.	To - Multiple addresses should be separated by commas
+3.	CC - Multiple addresses should be separated by commas
+4.	BCC - Multiple addresses should be separated by commas
+5.	Subject
+6.	Body - From line 6 on will be posted into the body of the email
+
+File Configuration:
+This configuration file requires that the first line be the path to the file 
+you wish to write to. All of the other lines created in this file will be 
+written to the specified file.
+
+Browser Configuration:
+The browser configuration file does not have any special constraints, the whole 
+document is pulled and displayed after a successful submission.
+
+

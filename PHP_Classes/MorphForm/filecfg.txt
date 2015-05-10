@@ -1,0 +1,3 @@
+storeit.txt
+Name: [r_LastName], [r_FirstName]
+Email: [re_email]

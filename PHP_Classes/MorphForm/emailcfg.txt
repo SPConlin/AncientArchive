@@ -1,0 +1,9 @@
+designs@wolvesbanedesigns.com
+[re_email]
+
+
+Thank you for testing our form!
+Hi [r_FirstName],
+This is a quick note to thank you for filling out our form.
+
+The Wolvesbane Designs Staff.
